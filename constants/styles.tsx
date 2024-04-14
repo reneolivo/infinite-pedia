@@ -55,5 +55,40 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 1,
     color: '#333',
     padding: 10,
+  },
+  noPadding: {
+    paddingBottom: 0,
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingTop: 0,
+  },
+  verticalSpace: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    gap: 20,
+  },
+});
+
+export const modalStyles = StyleSheet.create({
+  background: {
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(0,0,0, 0.5)',
+  },
+  container: {
+    margin: 20,
+    flexGrow: 0,
+    flexShrink: 1,
+    alignSelf: 'stretch',
+    backgroundColor: 'white',
+    padding: 20,
   }
 });
