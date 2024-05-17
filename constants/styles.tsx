@@ -68,6 +68,12 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-around',
     gap: 20,
   },
+  horizontalSpace: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
 });
 
 export const modalStyles = StyleSheet.create({

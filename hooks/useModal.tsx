@@ -28,7 +28,7 @@ export function useModal(): UseModalResult {
   };
 
   function open(props: OpenModalProps): void {
-    const { title, children } = props;
+    const { title, children, actions = [] } = props;
 
     setView(
       <Pressable
@@ -45,7 +45,8 @@ export function useModal(): UseModalResult {
                 {title}
               </Text>
               {children}
-              <Button title="Close" onPress={close} />
+              {actions}
+              <Button color="#aaa" title="Close" onPress={close} />
             </View>
           </View>
         </Pressable>
@@ -58,13 +59,14 @@ export function useModal(): UseModalResult {
   }
 }
 
-type UseModalResult = {
+export type UseModalResult = {
   view: ReactNode,
   open: (props: OpenModalProps) => void,
   close: () => void,
 };
 
-type OpenModalProps = {
-  title: string,
+export type OpenModalProps = {
+  title: ReactNode,
   children: ReactNode,
+  actions?: ReactNode[],
 };
