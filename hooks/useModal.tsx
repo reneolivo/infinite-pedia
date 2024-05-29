@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { Button, Pressable, Text, View, useWindowDimensions } from 'react-native';
 import { modalStyles, styles } from '../constants/styles';
 
@@ -28,7 +28,7 @@ export function useModal(): UseModalResult {
   };
 
   function open(props: OpenModalProps): void {
-    const { title, children, actions = [] } = props;
+    const { title, children } = props;
 
     setView(
       <Pressable
@@ -45,7 +45,6 @@ export function useModal(): UseModalResult {
                 {title}
               </Text>
               {children}
-              {actions}
               <Button color="#aaa" title="Close" onPress={close} />
             </View>
           </View>
@@ -68,5 +67,4 @@ export type UseModalResult = {
 export type OpenModalProps = {
   title: ReactNode,
   children: ReactNode,
-  actions?: ReactNode[],
 };
