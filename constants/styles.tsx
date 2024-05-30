@@ -11,6 +11,13 @@ const baseHeader: StyleProp<{}> = {
   color: '#333',
   fontWeight: 'bold',
 };
+const header4 = {
+  ...baseHeader,
+  color: '#333',
+  fontSize: 24,
+  lineHeight: 24,
+  marginBottom: 10,
+};
 
 export const styles = StyleSheet.create({
   header1: {
@@ -37,13 +44,7 @@ export const styles = StyleSheet.create({
     lineHeight: 32,
     marginBottom: 10,
   },
-  header4: {
-    ...baseHeader,
-    color: '#333',
-    fontSize: 24,
-    lineHeight: 24,
-    marginBottom: 10,
-  },
+  header4,
   container: {
     backgroundColor: '#FEFEFE',
     color: '#333',
@@ -73,6 +74,19 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
+  },
+  footer: {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+    shadowColor: 'rgba(0,0,0,0.3)',
+    shadowRadius: 15,
+  },
+  footerHeader: {
+    ...header4,
+    flexGrow: 1,
+    lineHeight: 50,
+    marginBottom: 0,
   },
 });
 

@@ -1,7 +1,8 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
 import { Button, FlatList, Text, View } from 'react-native';
 import { SearchBar } from 'react-native-screens';
+import { SandwichMenuSVG } from '../assets/SandwichMenuSVG';
 import { bluePrintsGroupedByCategories } from '../constants/bluePrints';
 import { styles } from '../constants/styles';
 import { InfinitePediaScreensType } from '../types/InfinitePediaScreensType';
@@ -16,6 +17,7 @@ export function BlueprintsListScreen(props: BlueprintsListProps): ReactElement {
   const modal = useModal();
   const [lists, setLists] = useState<ListType[]>([]);
   const [editedList, setEditedList] = useState<ListType>({ name: '', isPrimary: false });
+  const primaryList = useMemo(() => lists.find((list) => list.isPrimary), [lists]);
 
   useEffect(() => {
     getLists().then(setLists);
@@ -24,14 +26,28 @@ export function BlueprintsListScreen(props: BlueprintsListProps): ReactElement {
   return (
     <View style={styles.container}>
       <>
-        <Text style={styles.header1}>Inifite</Text>
+        <Text style={styles.header1}>Infinite</Text>
         <Text style={styles.header2}>Pedia</Text>
       </>
+      <pre>
+      </pre>
       <SearchBar placeholder="Blueprint search" />
       <Collapse items={getBlueprintCollapseItems()} />
+      {primaryList && (renderListFooter())}
       {modal.view}
     </View>
   );
+
+  function renderListFooter(): ReactElement {
+    return (
+      <View style={styles.footer}>
+        <Text style={styles.footerHeader}>
+          {primaryList?.name}
+        </Text>
+        <SandwichMenuSVG style={{ padding: 10 }} />
+      </View>
+    );
+  }
 
   function getBlueprintCollapseItems(): CollapseItem[] {
     return bluePrintsGroupedByCategories.map((category) => ({
@@ -78,17 +94,14 @@ export function BlueprintsListScreen(props: BlueprintsListProps): ReactElement {
       {
         title,
         children: (
-          <ListForm onChange={setEditedList} />
+          <ListForm value={defaultValues} onFinish={saveList} />
         ),
-        actions: [
-          <Button key="save" onPress={saveList} title="💾 Save" />,
-        ],
       },
     );
   }
 
-  function saveList(): void {
-    setLists([...lists, editedList]);
+  function saveList(newListValue: ListType): void {
+    setLists([...lists, newListValue]);
     modal.close();
   }
 }

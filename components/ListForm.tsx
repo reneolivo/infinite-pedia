@@ -10,7 +10,11 @@ const defaultList: ListType = {
 };
 
 export function ListForm(props: ListFormProps): ReactElement {
-  const { value = defaultList, onChange = () => {} } = props;
+  const { value: initialValue, onFinish = () => {} } = props;
+  const value = {
+    ...defaultList,
+    ...initialValue,
+  };
   const [listName, setListName] = useState(value.name);
   const [listIsPrimary, setListIsPrimary] = useState(value.isPrimary);
   const ref = useRef<TextInputRefType>();
@@ -20,14 +24,13 @@ export function ListForm(props: ListFormProps): ReactElement {
   }, []);
 
   return (
-    <>
+    <View style={styles.verticalSpace}>
       <TextInput
         innerRef={ref}
         placeholder="List name"
         value={listName}
         onChangeText={(name) => {
           setListName(name);
-          onChange({ name, isPrimary: listIsPrimary });
         }}
       />
       <View style={styles.horizontalSpace}>
@@ -35,18 +38,24 @@ export function ListForm(props: ListFormProps): ReactElement {
           value={listIsPrimary}
           onValueChange={(isPrimary) => {
             setListIsPrimary(isPrimary);
-            onChange({ name: listName, isPrimary: listIsPrimary });
           }}
         />
         <Text
           onPress={() => setListIsPrimary(!listIsPrimary)}
         >Is Primary?</Text>
       </View>
-    </>
+      <Button
+        title="💾 Save"
+        onPress={() => onFinish({
+          name: listName,
+          isPrimary: listIsPrimary,
+        })}
+      />
+    </View>
   );
 }
 
 export type ListFormProps = {
-  value?: ListType,
-  onChange?: (list: ListType) => void,
+  value?: Partial<ListType>,
+  onFinish?: (list: ListType) => void,
 };
